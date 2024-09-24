@@ -8,6 +8,10 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+<<<<<<< HEAD
+=======
+import org.springframework.transaction.annotation.Transactional;
+>>>>>>> 7bd4d1a (Transactional)
 import org.springframework.web.bind.annotation.*;
 import com.amujournal.amuJournal.service.journalEntryService;
 
@@ -38,6 +42,10 @@ public class jornalEntryControl {
     }
 
     @PostMapping("{userName}")
+<<<<<<< HEAD
+=======
+    @Transactional
+>>>>>>> 7bd4d1a (Transactional)
     public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry myEntry,@PathVariable String userName){
         try{
             User user = userService.getEntryByUserName(userName);
@@ -71,9 +79,15 @@ public class jornalEntryControl {
             oldEntry.setContent(newEntry.getContent() != null && !newEntry.getContent().equals("") ? newEntry.getContent() : oldEntry.getContent());
             oldEntry.setTitle(newEntry.getTitle() != null && !newEntry.getTitle().equals("") ? newEntry.getTitle() : oldEntry.getTitle());
 
+<<<<<<< HEAD
 //            journalEntryService.saveEntry(oldEntry, userName);
         }
 //        System.out.println();
+=======
+            journalEntryService.saveEntry(oldEntry, userName);
+        }
+        System.out.println();
+>>>>>>> 7bd4d1a (Transactional)
             return oldEntry;
     }
 
