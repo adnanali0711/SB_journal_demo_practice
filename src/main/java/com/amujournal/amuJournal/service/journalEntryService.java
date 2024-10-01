@@ -3,6 +3,7 @@ package com.amujournal.amuJournal.service;
 import com.amujournal.amuJournal.entity.JournalEntry;
 import com.amujournal.amuJournal.entity.User;
 import org.bson.types.ObjectId;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.amujournal.amuJournal.journalEntryRepository.journalEntryRepository;
 import org.springframework.stereotype.Component;
@@ -25,11 +26,18 @@ public class journalEntryService {
     }
     @Transactional
     public void saveEntry(JournalEntry journalEntry, String userName){
-        User user = userService.getEntryByUserName(userName);
-        journalEntry.setDate(LocalDateTime.now());
-        JournalEntry saved = journalEntryRepository.save(journalEntry);
-        user.getJournalEntries().add(saved);
-        userService.saveEntry(user);
+        try {
+            User user = userService.getEntryByUserName(userName);
+            System.out.println(user);
+            System.out.println("saveEntry Start");
+            journalEntry.setDate(LocalDateTime.now());
+            JournalEntry saved = journalEntryRepository.save(journalEntry);
+            System.out.println(saved);
+            user.getJournalEntries().add(saved);
+            userService.saveEntry(user);
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        }
 
     }
 

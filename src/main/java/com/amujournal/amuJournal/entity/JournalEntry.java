@@ -17,8 +17,6 @@ import java.util.Date;
 
 @Document(collection = "journal_entries")
 @Component
-//@Getter
-//@Setter
 @Data
 @NoArgsConstructor
 public class JournalEntry {

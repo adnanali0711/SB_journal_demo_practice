@@ -18,6 +18,13 @@ public class userController {
 
     @Autowired
     private userService userService;
+
+    @GetMapping("{userName}")
+    public ResponseEntity<User> getByUserName(@PathVariable String userName){
+
+        User user = userService.getEntryByUserName(userName);
+        return new ResponseEntity<>(user,HttpStatus.OK);
+    }
     @GetMapping
     public ResponseEntity<List<User>> getAllUser(){
         List<User> users = userService.getAll();

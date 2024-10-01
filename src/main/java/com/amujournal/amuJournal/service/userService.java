@@ -24,7 +24,8 @@ public class userService {
     }
 
     public User getEntryByUserName(String userName){
-        return userRepository.findByUserName(userName);
+        User user = userRepository.findByUserName(userName);
+        return user;
     }
 
     public boolean deleteById(ObjectId id){
