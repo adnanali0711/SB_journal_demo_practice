@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import com.amujournal.amuJournal.service.journalEntryService;
 
 
-import java.sql.SQLOutput;
 import java.util.*;
 
 @RestController
 @RequestMapping("/journal")
+
+
 public class jornalEntryControl {
 
     @Autowired
@@ -36,17 +37,17 @@ public class jornalEntryControl {
         }
     }
 
-    @PostMapping("/{userName}")
+    @PostMapping("{userName}")
     public ResponseEntity<JournalEntry> createEntry(@RequestBody JournalEntry myEntry,@PathVariable String userName){
-        System.out.println(myEntry+"<->"+userName);
         try{
+            User user = userService.getEntryByUserName(userName);
             journalEntryService.saveEntry(myEntry,userName);
             return new ResponseEntity<>(myEntry,HttpStatus.CREATED);
         }catch(Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-    }
 
+    }
     @GetMapping("id/{myID}")
     public ResponseEntity<JournalEntry> getEntryByID(@PathVariable ObjectId myID){
        Optional<JournalEntry> journalEntry =  journalEntryService.getEntryById(myID);
@@ -55,6 +56,7 @@ public class jornalEntryControl {
        }else{
            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
        }
+
     }
     @DeleteMapping("id/{userName}/{myID}")
     public ResponseEntity<?> deleteEntryByID(@PathVariable ObjectId myID, @PathVariable String userName) {
@@ -69,7 +71,9 @@ public class jornalEntryControl {
             oldEntry.setContent(newEntry.getContent() != null && !newEntry.getContent().equals("") ? newEntry.getContent() : oldEntry.getContent());
             oldEntry.setTitle(newEntry.getTitle() != null && !newEntry.getTitle().equals("") ? newEntry.getTitle() : oldEntry.getTitle());
 
+//            journalEntryService.saveEntry(oldEntry, userName);
         }
+//        System.out.println();
             return oldEntry;
     }
 
